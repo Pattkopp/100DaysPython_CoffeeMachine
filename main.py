@@ -91,8 +91,12 @@ while not leave:
         check_resources(selection)
         money_obtained = process_coins()
         if enough_money(selection, money_obtained):
-            money += money_obtained
+
             if money_obtained > MENU[selection]["cost"]:
                 refund = round(money_obtained - MENU[selection]["cost"], 2)
                 print(f"Refunded: ${refund}")
-
+                money_obtained -= refund
+            money += money_obtained
+            for k, v in MENU[selection]["ingredients"].items():
+                resources[k] -= v
+            print(f"Enjoy your {selection}!")
